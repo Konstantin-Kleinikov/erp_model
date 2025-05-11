@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}
+  Confirm Delete Currency
+{% endblock %}
+{% block content %}
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <div class="card-header">
+        Confirm Delete Currency <strong>{{ currency.code }}</strong>
+      </div>
+      <div class="card-body">
+        <p>Are you sure you want to delete the currency
+          <strong>{{ currency.code }}</strong> ({{ currency.name }})?</p>
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Confirm Delete</button>
+          <a href="{% url 'common:currency_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

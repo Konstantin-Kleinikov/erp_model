@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+  {{ currency.code }}
+{% endblock %}
+{% block content %}
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <div class="card-body">
+        <h5 class="card-title">{{ currency.code }} ({{ currency.name }})</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <small>
+            Created by @{{ currency.created_by }} on {{ currency.created_at|date:"d E Y, H:i" }}<br>
+            {% if currency.modified_by %}
+              Modified by @{{ currency.modified_by }} on {{ currency.modified_at|date:"d E Y, H:i" }}
+            {% else %}
+             <p> </p>
+            {% endif %}
+          </small>
+        </h6>
+        <p>
+          ISO code: <b>{{ currency.iso_code }}</b>
+        </p>
+        <p>
+          Numeric code: <b>{{ currency.numeric_code }}</b>
+        </p>
+        <p class="card-text"><b>Note:</b> {{ currency.note|linebreaksbr }}</p>
+      </div>
+      <p>
+        <a href="{% url 'common:currency_list' %}" class="card-link"><-- Back to Currency List</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

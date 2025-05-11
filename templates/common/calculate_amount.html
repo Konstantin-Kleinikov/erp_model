@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load humanize %}
+{% block title %}Calculate Amount in RUB{% endblock %}
+{% block content %}
+  <div class="col d-flex justify-content-left">
+    <div class="card" style="width: 40rem;">
+      <div class="card-header">
+        <h1>Calculate Amount in RUB</h1>
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Calculate</button>
+        </form>
+      </div>
+      <div class="card-footer">
+        {% if result %}
+          <div class="alert alert-success" style="margin-top: 20px;">
+            Calculated Amount (rate = {{ rate.rate }}/nominal = {{ rate.nominal }}):
+            <b>{{ form.data.amount|floatformat:2|intcomma }}</b>
+            {{ form.data.currency }} =
+            <b>{{ result|floatformat:2|intcomma }}</b> RUB
+          </div>
+        {% endif %}
+        {% if error_message %}
+          <div class="alert alert-danger" style="margin-top: 20px;">
+            {{ error_message }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

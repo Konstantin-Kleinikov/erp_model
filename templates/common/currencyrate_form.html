@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block content %}
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <div class="card-header">
+        {% if '/edit/' in request.path %}
+          Editing Currency Rate
+        {% elif '/delete/' in request.path %}
+          Deleting Currency Rate
+        {% else %}
+          Create new Currency Rate
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% if not '/delete/' in request.path %}
+            {% bootstrap_form form %}
+          {% else %}
+            <article>
+              <p>{{ form.instance.currency }}</p>
+              <p>{{ form.instance.rate_date }}</p>
+              <h3>{{ form.instance.nominal }}</h3>
+              <p>{{ form.instance.rate }}</p>
+            </article>
+          {% endif %}
+          {% bootstrap_button button_type="submit" content="Submit" %}
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

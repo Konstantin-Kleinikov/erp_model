@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+  Main Page
+{% endblock %}
+{% block content %}
+  <ul>
+    <li style="margin-bottom: 20px;">
+      <a href="{% url 'common:currency_list' %}"><h3>Currencies</h3></a>
+      <small>Pages to view and maintain currencies.</small>
+    </li>
+    <li style="margin-bottom: 20px;">
+      <a href="{% url 'common:currency_rates' %}"><h3>Currencies Rates</h3></a>
+      <small>Pages to view downloaded currency rates.</small>
+    </li>
+    <li style="margin-bottom: 20px;">
+      <a href="{% url 'common:calculate_amount' %}"><h3>Calculate amount</h3></a>
+      <small>Page to calculate amount in local currency - RUB.</small>
+    </li>
+  </ul>
+{% endblock %}

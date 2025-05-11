@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}
+  Currency Rate Detail
+{% endblock %}
+{% block content %}
+  <div class="container" style="margin-top: 10px">
+    <h1>Currency Rate Detail</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Rate Date</td>
+          <td>{{ object.rate_date }}</td>
+        </tr>
+        <tr>
+          <td>Currency</td>
+          <td>{{ object.currency }}</td>
+        </tr>
+        <tr>
+          <td>Rate</td>
+          <td>{{ object.rate }}</td>
+        </tr>
+        <tr>
+          <td>Nominal</td>
+          <td>{{ object.nominal }}</td>
+        </tr>
+        <tr>
+          <td>Created At</td>
+          <td>{{ object.created_at }}</td>
+        </tr>
+        <tr>
+          <td>Created By</td>
+          <td>{{ object.created_by }}</td>
+        </tr>
+        <tr>
+          <td>Modified At</td>
+          <td>{{ object.modified_at }}</td>
+        </tr>
+        <tr>
+          <td>Modified By</td>
+          <td>{{ object.modified_by }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <form method="post" action="{% url 'common:currency_rates_edit' object.currency.code object.rate_date|date:'Y-m-d' %}" style="display: inline;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
+    <form method="post" action="{% url 'common:currency_rates_delete' object.currency.code object.rate_date|date:'Y-m-d'  %}" style="display: inline;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
+{% endblock %}

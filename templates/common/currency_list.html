@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}
+  Currency List
+{% endblock %}
+{% block content %}
+  <head>
+    <title>Currency List</title>
+    <style>
+      table, th, td {border: 1px solid black; border-collapse: collapse;}
+      th, td {padding: 5px; }
+    </style>
+  </head>
+  <body>
+    <div class="container" style="margin-top: 10px">
+      <h1>Currency List</h1>
+      <form method="get" action="{% url 'common:currency_list' %}">
+        <input type="text" name="filter_by_name" placeholder="Filter by name" value="{{ request.GET.filter_by_name }}">
+        <button type="submit">Filter</button>
+      </form>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr style="background-color: lightgreen">
+            <th scope="col">Code</th>
+            <th scope="col">Name</th>
+            <th scope="col">ISO Code</th>
+            <th scope="col">Numeric Code</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Modified At</th>
+            <th scope="col">Modified By</th>
+            <th scope="col">Edit / Delete</th>
+          </tr>
+        </thead>
+          <tbody>
+            {% for currency in currency_list %}
+            <tr>
+              <td>
+                <a href="{% url 'common:currency_detail' currency.code %}">
+                  {{ currency.code }}
+                </a>
+              </td>
+              <td>{{ currency.name }}</td>
+              <td>{{ currency.iso_code }}</td>
+              <td>{{ currency.numeric_code }}</td>
+              <td>{{ currency.created_at }}</td>
+              <td>{{ currency.created_by }}</td>
+              <td>{{ currency.modified_at }}</td>
+              <td>{{ currency.modified_by }}</td>
+              <td>
+                <a href="{% url 'common:currency_edit' currency.code %}">
+                  Edit
+                </a> /
+                <a href="{% url 'common:currency_delete' currency.code %}">
+                  Delete
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+    <div>
+      <p>
+        <a href="{% url 'common:currency_create' %}">Create new Currency</a>
+      </p>
+    </div>
+  </body>
+  {% include "includes/paginator.html" %}
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}
+  {{ title }}
+{% endblock %}
+{% block content %}
+  <style>
+    table, th, td {border: 1px solid black; border-collapse: collapse;}
+    th, td {padding: 5px; }
+  </style>
+  <body>
+    <div class="container" style="margin-top: 10px">
+      <h1>{{ header }}</h1>
+      <a href="{% url 'common:download_rates' %}" class="btn btn-primary">Download Rates</a>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr style="background-color: lightgreen">
+            <th scope="col">Rate Date</th>
+            <th scope="col">Currency</th>
+            <th scope="col">Rate</th>
+            <th scope="col">Nominal</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Modified At</th>
+            <th scope="col">Modified By</th>
+            <th scope="col">Edit / Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for currency_rate in currencyrate_list %}
+          <tr>
+            <td>
+              <a href="{% url 'common:currency_rates_date' currency_rate.rate_date %}">
+              {{ currency_rate.rate_date }}</a>
+            </td>
+            <td>
+              <a href="{% url 'common:currency_rates_currency' currency_rate.currency.code %}">
+              {{ currency_rate.currency }}</a>
+            </td>
+            <td>{{ currency_rate.rate }}</td>
+            <td>{{ currency_rate.nominal }}</td>
+            <td>{{ currency_rate.created_at }}</td>
+            <td>{{ currency_rate.created_by }}</td>
+            <td>{{ currency_rate.modified_at }}</td>
+            <td>{{ currency_rate.modified_by }}</td>
+            <td>
+              <a href="{% url 'common:currency_rates_edit' currency_rate.id %}">
+                Edit
+              </a> /
+              <a href="{% url 'common:currency_rates_delete' currency_rate.id %}">
+                Delete
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+        {% if not request.resolver_match.url_name == 'currency_rates' %}
+        <p>
+          <a href="{% url 'common:currency_rates' %}" class="card-link"><-- Back to all Currency Rates</a>
+        </p>
+        {% endif %}
+    </div>
+  </body>
+  {% include "includes/paginator.html" %}
+{% endblock %}
