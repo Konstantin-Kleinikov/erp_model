@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Currency, CurrencyRate, TelegramUser
+from common.models import Currency, CurrencyRate, Item, TelegramUser
 
 
 @admin.register(Currency)
@@ -31,3 +31,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(CurrencyRate)
 admin.site.register(TelegramUser)
+admin.site.register(Product)

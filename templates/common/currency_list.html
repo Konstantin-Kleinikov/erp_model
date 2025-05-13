@@ -13,7 +13,7 @@
   <body>
     <div class="container" style="margin-top: 10px">
       <h1>Currency List</h1>
-      <form method="get" action="{% url 'common:currency_list' %}">
+      <form method="get" action="{% url 'common:currency_list' %}" class="form">
         <input type="text" name="filter_by_name" placeholder="Filter by name" value="{{ request.GET.filter_by_name }}">
         <button type="submit">Filter</button>
       </form>

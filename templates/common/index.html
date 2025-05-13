@@ -5,11 +5,15 @@
 {% block content %}
   <ul>
     <li style="margin-bottom: 20px;">
-      <a href="{% url 'common:currency_list' %}"><h3>Currencies</h3></a>
+      <a href="{% url 'common:currency_list' %}">
+        <h3>Currencies ({{ currency_count }})</h3>
+      </a>
       <small>Pages to view and maintain currencies.</small>
     </li>
     <li style="margin-bottom: 20px;">
-      <a href="{% url 'common:currency_rates' %}"><h3>Currencies Rates</h3></a>
+      <a href="{% url 'common:currency_rates' %}">
+        <h3>Currencies Rates ({{ currency_rates_count }})</h3>
+      </a>
       <small>Pages to view downloaded currency rates.</small>
     </li>
     <li style="margin-bottom: 20px;">

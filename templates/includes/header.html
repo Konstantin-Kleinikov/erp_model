@@ -24,6 +24,11 @@
             </a>
           </li>
           {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link">
+              User: <u>{{ user.username }}</u>
+            </a>
+          </li>
             <div class="btn-group" role="group" aria-label="Basic outlined example">
               <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}

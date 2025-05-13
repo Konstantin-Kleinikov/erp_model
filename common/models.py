@@ -83,9 +83,53 @@ class TelegramUser(models.Model):
     )
 
     class Meta:
-        ordering = ['user__username']
+        ordering = ['user__username', 'telegram_id']
         verbose_name = 'telegram user'
         verbose_name_plural = 'Telegram Users'
 
     def __str__(self):
         return f'{self.user.username} - {self.telegram_id}'
+
+
+class Item(AuditTrailModel, NoteModel):
+    TYPE_CHOICES = [
+        ('Purchased', 'Purchased'),
+        ('Produced', 'Produced'),
+        ('Services', 'Services'),
+    ]
+
+    item_id = models.CharField(
+        'Item ID',
+        max_length=50,
+        unique=True,
+    )
+    description = models.TextField(
+        'Description',
+    )
+    type = models.CharField(
+        'Item Type',
+        max_length=20,
+        choices=TYPE_CHOICES,
+        default='Purchased',
+    )
+    unit_of_measure = models.CharField(
+        'Unit of Measure',
+        max_length=4,
+        default='pcs.',
+    )
+    cost_price = models.FloatField(
+        'Cost Price',
+        default=0,
+    )
+    weight = models.FloatField(
+        'Weight',
+        default=0,
+    )
+
+    class Meta:
+        ordering = ['item_id']
+        verbose_name = 'item'
+        verbose_name_plural = 'Items'
+
+    def __str__(self):
+        return f'{self.item_id} - {self.description}'
