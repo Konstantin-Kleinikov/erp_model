@@ -13,10 +13,10 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 
 from common.constants import PAGINATOR_VALUE
 from common.currency_rates import download_currency_rates
-from common.forms import CalculateAmountForm, DownloadRatesForm
+from common.forms import CalculateAmountForm, DownloadRatesForm, ItemForm
 from common.mixins import (CurrencyMixin, CurrencyRateDetailMixin,
                            CurrencyRateMixin)
-from common.models import Currency, CurrencyRate
+from common.models import Currency, CurrencyRate, Item
 
 
 class IndexView(TemplateView):
@@ -28,6 +28,7 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['currency_count'] = Currency.objects.count()
         context['currency_rates_count'] = CurrencyRate.objects.count()
+        context['items_count'] = Item.objects.count()
         return context
 
 
@@ -255,3 +256,43 @@ class CalculateAmountView(View):
             'rate': rate,
             'error_message': error_message,
         })
+
+
+class ItemListView(LoginRequiredMixin, ListView):
+    model = Item
+    template_name = 'common/item_list.html'
+    context_object_name = 'items'
+    paginate_by = 10
+
+
+class ItemCreateView(LoginRequiredMixin, CreateView):
+    model = Item
+    form_class = ItemForm
+    template_name = 'common/item_create.html'
+    success_url = reverse_lazy('common:item_list')
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user.username
+        return super().form_valid(form)
+
+
+class ItemUpdateView(LoginRequiredMixin, UpdateView):
+    model = Item
+    form_class = ItemForm
+    template_name = 'common/item_edit.html'
+    success_url = reverse_lazy('common:item_list')
+
+    def form_valid(self, form):
+        form.instance.modified_by = self.request.user.username
+        return super().form_valid(form)
+
+
+class ItemDeleteView(LoginRequiredMixin, DeleteView):
+    model = Item
+    template_name = 'common/item_delete.html'
+    success_url = reverse_lazy('common:item_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['item'] = self.object
+        return context

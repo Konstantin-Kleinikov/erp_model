@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
+from common.choices import TYPE_CHOICES, UNIT_OF_MEASURE_CHOICES
 from core.models import AuditTrailModel, NoteModel
 
 User = get_user_model()
@@ -92,12 +93,6 @@ class TelegramUser(models.Model):
 
 
 class Item(AuditTrailModel, NoteModel):
-    TYPE_CHOICES = [
-        ('Purchased', 'Purchased'),
-        ('Produced', 'Produced'),
-        ('Services', 'Services'),
-    ]
-
     item_id = models.CharField(
         'Item ID',
         max_length=50,
@@ -115,6 +110,7 @@ class Item(AuditTrailModel, NoteModel):
     unit_of_measure = models.CharField(
         'Unit of Measure',
         max_length=4,
+        choices=UNIT_OF_MEASURE_CHOICES,
         default='pcs.',
     )
     cost_price = models.FloatField(

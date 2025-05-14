@@ -20,5 +20,9 @@
       <a href="{% url 'common:calculate_amount' %}"><h3>Calculate amount</h3></a>
       <small>Page to calculate amount in local currency - RUB.</small>
     </li>
+    <li style="margin-bottom: 20px;">
+      <a href="{% url 'common:item_list' %}"><h3>Items ({{ items_count }})</h3></a>
+      <small>Page to maintain Items.</small>
+    </li>
   </ul>
 {% endblock %}

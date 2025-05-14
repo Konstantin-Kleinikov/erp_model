@@ -85,4 +85,8 @@ urlpatterns = [
         download_rates,
         name='download_rates',
     ),
+    path('items/', views.ItemListView.as_view(), name='item_list'),
+    path('item/create/', views.ItemCreateView.as_view(), name='item_create'),
+    path('item/edit/<int:pk>/', views.ItemUpdateView.as_view(), name='item_edit'),
+    path('item/delete/<int:pk>/', views.ItemDeleteView.as_view(), name='item_delete'),
 ]

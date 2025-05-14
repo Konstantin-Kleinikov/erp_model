@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'debug_toolbar',
     'django_bootstrap5',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'core.apps.CoreConfig',
     'common.apps.CommonConfig',
     'api.apps.ApiConfig',
@@ -145,3 +147,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/auth/login/'
 
 LOGIN_REDIRECT_URL = 'common:index'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

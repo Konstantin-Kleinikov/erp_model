@@ -31,4 +31,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(CurrencyRate)
 admin.site.register(TelegramUser)
-admin.site.register(Product)
+admin.site.register(Item)

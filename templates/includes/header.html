@@ -23,6 +23,11 @@
               Rules
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {% if view_name == 'admin:index' %} text-white {% endif %}" href="{% url 'admin:index' %}">
+              Admin
+            </a>
+          </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link">

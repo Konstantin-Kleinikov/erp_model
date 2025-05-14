@@ -1,7 +1,7 @@
 """Module with forms for common application."""
 from django import forms
 
-from common.models import Currency, CurrencyRate
+from common.models import Currency, CurrencyRate, Item
 
 
 class CurrencyForm(forms.ModelForm):
@@ -53,3 +53,9 @@ class CalculateAmountForm(forms.Form):
         required=True,
         min_value=0
     )
+
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = '__all__'
