@@ -282,6 +282,14 @@ class ItemUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'common/item_edit.html'
     success_url = reverse_lazy('common:item_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['created_by'] = self.object.created_at
+        context['created_at'] = self.object.created_at
+        context['modified_by'] = self.object.modified_at
+        context['modified_at'] = self.object.modified_at
+        return context
+
     def form_valid(self, form):
         form.instance.modified_by = self.request.user.username
         return super().form_valid(form)

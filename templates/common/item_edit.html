@@ -1,13 +1,25 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% block title %}
+  Edit Item
+{% endblock %}
 {% block content %}
 <div class="container">
     <h2>Edit Item</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'common:item_list' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+  <small>
+    Created by @{{ item.created_by }} on {{ item.created_at|date:"d E Y, H:i" }}<br>
+    {% if item.modified_by %}
+      Modified by @{{ item.modified_by }} on {{ item.modified_at|date:"d E Y, H:i" }}
+    {% else %}
+     <p> </p>
+    {% endif %}
+  </small>
+  <p></p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="{% url 'common:item_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
 </div>
 {% endblock %}

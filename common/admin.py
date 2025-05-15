@@ -29,6 +29,20 @@ class CategoryAdmin(admin.ModelAdmin):
     )
 
 
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = (
+        'item_id',
+        'type',
+        'unit_of_measure',
+        'cost_price',
+        'weight',
+        'created_at',
+        'created_by',
+        'modified_at',
+        'modified_by',
+    )
+
 admin.site.register(CurrencyRate)
 admin.site.register(TelegramUser)
-admin.site.register(Item)
+

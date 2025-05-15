@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+from django.utils.text import Truncator
 
 from common.choices import TYPE_CHOICES, UNIT_OF_MEASURE_CHOICES
+from common.constants import NUM_OF_WORDS_IN_DESC
 from core.models import AuditTrailModel, NoteModel
 
 User = get_user_model()
@@ -98,8 +100,9 @@ class Item(AuditTrailModel, NoteModel):
         max_length=50,
         unique=True,
     )
-    description = models.TextField(
+    description = models.CharField(
         'Description',
+        max_length=150,
     )
     type = models.CharField(
         'Item Type',
@@ -128,4 +131,5 @@ class Item(AuditTrailModel, NoteModel):
         verbose_name_plural = 'Items'
 
     def __str__(self):
-        return f'{self.item_id} - {self.description}'
+        return (f'{self.item_id} - '
+                f'{Truncator(self.description).words(NUM_OF_WORDS_IN_DESC)}')

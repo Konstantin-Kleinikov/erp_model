@@ -58,4 +58,11 @@ class CalculateAmountForm(forms.Form):
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = '__all__'
+        fields = [
+            'item_id',
+            'description',
+            'type',
+            'unit_of_measure',
+            'cost_price',
+            'weight',
+        ]
