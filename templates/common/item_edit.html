@@ -5,17 +5,28 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <h2>Edit Item</h2>
-  <small>
-    Created by @{{ item.created_by }} on {{ item.created_at|date:"d E Y, H:i" }}<br>
-    {% if item.modified_by %}
-      Modified by @{{ item.modified_by }} on {{ item.modified_at|date:"d E Y, H:i" }}
-    {% else %}
-     <p> </p>
-    {% endif %}
-  </small>
+  <div class="row">
+    <div class="col-4">
+      <h2>Edit Item</h2>
+      <small>
+      {% if item %}
+        Created by @{{ item.created_by }} on {{ item.created_at|date:"d E Y, H:i" }}<br>
+        {% if item.modified_by %}
+          Modified by @{{ item.modified_by }} on {{ item.modified_at|date:"d E Y, H:i" }}
+        {% else %}
+         <p> </p>
+        {% endif %}
+      {% endif %}
+      </small>
+    </div>
+    <div class="col-8">
+      {% if form.instance.image %}
+        <img src="{{ form.instance.image.url }}" alt="Item Image" style="max-width: 200px; max-height: 200px;">
+      {% endif %}
+    </div>
+  </div>
   <p></p>
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-primary">Update</button>

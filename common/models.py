@@ -124,6 +124,11 @@ class Item(AuditTrailModel, NoteModel):
         'Weight',
         default=0,
     )
+    image = models.ImageField(
+        'Item image',
+        blank=True,
+        upload_to='item_images',
+    )
 
     class Meta:
         ordering = ['item_id']

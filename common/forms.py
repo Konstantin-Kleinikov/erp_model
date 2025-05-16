@@ -65,4 +65,6 @@ class ItemForm(forms.ModelForm):
             'unit_of_measure',
             'cost_price',
             'weight',
+            'image',
+            'note',
         ]
