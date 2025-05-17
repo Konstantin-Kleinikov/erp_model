@@ -138,3 +138,40 @@ class Item(AuditTrailModel, NoteModel):
     def __str__(self):
         return (f'{self.item_id} - '
                 f'{Truncator(self.description).words(NUM_OF_WORDS_IN_DESC)}')
+
+
+class ItemBOM(AuditTrailModel):
+    main_item = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name='main_items',
+        verbose_name='Main Item',
+    )
+    sub_item = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name='sub_items',
+        verbose_name='Sub Item',
+    )
+    bom_quantity = models.PositiveSmallIntegerField(
+        'Bom Quantity',
+        default=1,
+    )
+
+    class Meta:
+        ordering = ['main_item', 'sub_item']
+        verbose_name = 'BOM Item'
+        verbose_name_plural = 'BOM Items'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['main_item', 'sub_item'],
+                name='unique_main_sub_items',
+            ),
+            models.CheckConstraint(
+                check=~models.Q(main_item=models.F('sub_item')),
+                name='prevent_self_item'
+            ),
+        ]
+
+    def __str__(self):
+        return f'{self.main_item.item_id} - {self.sub_item.item_id}'

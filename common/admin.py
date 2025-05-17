@@ -1,6 +1,5 @@
+from common.models import Currency, CurrencyRate, Item, ItemBOM, TelegramUser
 from django.contrib import admin
-
-from common.models import Currency, CurrencyRate, Item, TelegramUser
 
 
 @admin.register(Currency)
@@ -45,4 +44,4 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(CurrencyRate)
 admin.site.register(TelegramUser)
-
+admin.site.register(ItemBOM)
