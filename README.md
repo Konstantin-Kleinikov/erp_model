@@ -71,6 +71,7 @@ The project is designed to demonstrate the use of Python's OOP capabilities in a
    - Set the `YOUR_TELEGRAM_BOT_TOKEN` in a `.env` file.
    - Run the bot using `python common/telegram_bot.py`.
 5. Use the bot commands to interact with the system.
+6. Use url `/api/v1/jwt/create/` to create a token for registered user.
 
 ## Future Enhancements
 

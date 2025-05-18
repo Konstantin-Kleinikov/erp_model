@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "f3d71eeb-6d34-42ec-8d20-c587306f3f43",
+		"name": "erp_model",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44215346"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "get_token_for_Admin // No Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();",
+									"const responseSchema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\":{",
+									"        \"refresh\": {\"type\": \"string\"},",
+									"        \"access\": {\"type\": \"string\"},",
+									"    },",
+									"    \"required\": [\"refresh\", \"access\"],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Статус-код ответа должен быть 200\", function () {",
+									"    pm.expect(",
+									"        pm.response.status,",
+									"        \"На POST-запрос с корректными данными должен возвращаться ответ со статусом 200\"",
+									"    ).to.be.eql(\"OK\");",
+									"});",
+									"pm.test('Структура ответа должна соответствовать ожидаемой', function () {",
+									"    pm.response.to.have.jsonSchema(responseSchema);",
+									"    pm.collectionVariables.set(\"adminAccessToken\", responseData.access);",
+									"    pm.collectionVariables.set(\"adminRefreshToken\", responseData.refresh);",
+									"    pm.collectionVariables.set(\"adminUsername\", JSON.parse(request.data).username);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"kkleinikov\",\n    \"password\": \"144511ufKadCar\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/jwt/create/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"jwt",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh_token_for_Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();",
+									"const responseSchema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\":{",
+									"        \"access\": {\"type\": \"string\"},",
+									"    },",
+									"    \"required\": [\"access\"],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Статус-код ответа должен быть 200\", function () {",
+									"    pm.expect(",
+									"        pm.response.status,",
+									"        \"На POST-запрос с корректными данными должен возвращаться ответ со статусом 200\"",
+									"    ).to.be.eql(\"OK\");",
+									"});",
+									"pm.test('Структура ответа должна соответствовать ожидаемой', function () {",
+									"    pm.response.to.have.jsonSchema(responseSchema);",
+									"    pm.collectionVariables.set(\"adminAccessToken\", responseData.access);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\": \"{{adminRefreshToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/jwt/refresh/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"jwt",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify_token_for_Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус-код ответа должен быть 200\", function () {",
+									"    pm.expect(",
+									"        pm.response.status,",
+									"        \"На POST-запрос с валидным токеном должен возвращаться ответ со статусом 200\"",
+									"    ).to.be.eql(\"OK\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"{{adminAccessToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/jwt/verify/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"jwt",
+								"verify",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify_ivalid_token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();",
+									"const responseSchema = {",
+									"    \"type\": \"object\",",
+									"    \"properties\":{",
+									"        \"detail\": {\"type\": \"string\"},",
+									"        \"code\": {\"type\": \"string\"}",
+									"    },",
+									"    \"required\": [\"detail\", \"code\"],",
+									"    \"additionalProperties\": false",
+									"};",
+									"",
+									"pm.test(\"Статус-код ответа должен быть 401\", function () {",
+									"    pm.expect(",
+									"        pm.response.status,",
+									"        \"На POST-запрос с невалидным токеном должен возвращаться ответ со статусом 401\"",
+									"    ).to.be.eql(\"Unauthorized\");",
+									"});",
+									"pm.test('Структура ответа должна соответствовать ожидаемой', function () {",
+									"    pm.response.to.have.jsonSchema(responseSchema);",
+									"});",
+									"pm.test('Значения полей в ответе должны соответствовать спецификации', function () {",
+									"    pm.expect(",
+									"        responseData.code,",
+									"        \"Убедитесь, что значение поля `code` в ответе соответствует спецификации API\"",
+									"    ).to.be.eql(\"token_not_valid\");",
+									"    pm.expect(",
+									"        responseData.detail,",
+									"        \"Убедитесь, что значение поля `detail` в ответе соответствует спецификации API\"",
+									"    ).to.be.eql(\"Token is invalid\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"invalid_token\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/jwt/verify/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"jwt",
+								"verify",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "items",
+			"item": [
+				{
+					"name": "create items by Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"item_id\": \"ITEM002\",\r\n        \"description\": \"Second Example Item\",\r\n        \"type\": \"Purchased\",\r\n        \"unit_of_measure\": \"pcs.\",\r\n        \"cost_price\": 30.00,\r\n        \"weight\": 1.5,\r\n        \"note\": \"This is another example item.\"\r\n    },\r\n    {\r\n        \"item_id\": \"ITEM003\",\r\n        \"description\": \"Third Example Item\",\r\n        \"type\": \"Produced\",\r\n        \"unit_of_measure\": \"klg.\",\r\n        \"cost_price\": 50.00,\r\n        \"weight\": 2.0,\r\n        \"note\": \"Yet another example item.\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/items/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"items",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create items by Anonymous",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"item_id\": \"ITEM002\",\r\n        \"description\": \"Second Example Item\",\r\n        \"type\": \"Purchased\",\r\n        \"unit_of_measure\": \"pcs.\",\r\n        \"cost_price\": 30.00,\r\n        \"weight\": 1.5,\r\n        \"note\": \"This is another example item.\"\r\n    },\r\n    {\r\n        \"item_id\": \"ITEM003\",\r\n        \"description\": \"Third Example Item\",\r\n        \"type\": \"Produced\",\r\n        \"unit_of_measure\": \"klg.\",\r\n        \"cost_price\": 50.00,\r\n        \"weight\": 2.0,\r\n        \"note\": \"Yet another example item.\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/items/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"items",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "adminAccessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "adminRefreshToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "adminUsername",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
