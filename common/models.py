@@ -3,7 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import Truncator
 
-from common.choices import TYPE_CHOICES, UNIT_OF_MEASURE_CHOICES
+from common.choices import ITEM_TYPES, UNIT_OF_MEASURES
 from common.constants import NUM_OF_WORDS_IN_DESC
 from core.models import AuditTrailModel, NoteModel
 
@@ -107,13 +107,13 @@ class Item(AuditTrailModel, NoteModel):
     type = models.CharField(
         'Item Type',
         max_length=20,
-        choices=TYPE_CHOICES,
+        choices=ITEM_TYPES,
         default='Purchased',
     )
     unit_of_measure = models.CharField(
         'Unit of Measure',
         max_length=4,
-        choices=UNIT_OF_MEASURE_CHOICES,
+        choices=UNIT_OF_MEASURES,
         default='pcs.',
     )
     cost_price = models.FloatField(

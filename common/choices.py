@@ -1,10 +1,9 @@
-TYPE_CHOICES = [
+ITEM_TYPES = [
     ('Produced', 'Produced'),
     ('Purchased', 'Purchased'),
     ('Services', 'Services'),
 ]
-
-UNIT_OF_MEASURE_CHOICES = [
+UNIT_OF_MEASURES = [
     ('klg.', 'Kilograms'),
     ('ltr.', 'Liters'),
     ('mtr.', 'Meters'),
