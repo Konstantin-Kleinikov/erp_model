@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.text import Truncator
@@ -172,6 +173,12 @@ class ItemBOM(AuditTrailModel):
                 name='prevent_self_item'
             ),
         ]
+
+    def clean(self):
+        if self.main_item.type != 'Produced':
+            raise ValidationError(
+                {'main_item': 'The main item must have a type of "Produced".'}
+            )
 
     def __str__(self):
         return f'{self.main_item.item_id} - {self.sub_item.item_id}'

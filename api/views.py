@@ -34,5 +34,8 @@ class ItemViewSet(BaseViewSet):
 
 
 class ItemBOMViewSet(BaseViewSet):
-    queryset = ItemBOM.objects.all()
     serializer_class = ItemBOMSerializer
+
+    def get_queryset(self):
+        item_id = self.kwargs['item_pk']  # 'item_pk' is derived from `lookup='item'`
+        return ItemBOM.objects.filter(main_item__id=item_id)
