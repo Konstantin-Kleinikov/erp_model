@@ -3,19 +3,26 @@ from rest_framework import serializers
 from common.models import Item, ItemBOM
 
 
-class ItemSerializer(serializers.ModelSerializer):
-    created_by = serializers.ReadOnlyField()
-    modified_by = serializers.ReadOnlyField()
-
+class BaseSerializer(serializers.ModelSerializer):
     class Meta:
+        fields = '__all__'
+        read_only_fields = ('created_by', 'modified_by')
+
+
+class ItemSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Item
-        fields = '__all__'
 
 
-class ItemBOMSerializer(serializers.ModelSerializer):
-    created_by = serializers.ReadOnlyField()
-    modified_by = serializers.ReadOnlyField()
+class ItemBOMSerializer(BaseSerializer):
+    main_item = serializers.SlugRelatedField(
+        queryset=Item.objects.all(),
+        slug_field='item_id',
+    )
+    sub_item = serializers.SlugRelatedField(
+        queryset=Item.objects.all(),
+        slug_field='item_id',
+    )
 
-    class Meta:
+    class Meta (BaseSerializer.Meta):
         model = ItemBOM
-        fields = '__all__'
