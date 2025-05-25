@@ -26,3 +26,7 @@ class ItemBOMSerializer(BaseSerializer):
 
     class Meta (BaseSerializer.Meta):
         model = ItemBOM
+
+
+class CurrencyRateSerializer(serializers.Serializer):
+    rate_date = serializers.CharField(max_length=10)

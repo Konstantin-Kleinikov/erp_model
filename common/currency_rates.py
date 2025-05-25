@@ -7,7 +7,27 @@ from common.models import Currency, CurrencyRate
 
 
 def download_currency_rates(user, date_req=None):
-    """Fetch currency rates from the Central Bank of Russia."""
+    """
+    Fetches currency rates from the Central Bank of Russia for a given date.
+
+    This function retrieves currency exchange rates from the Central Bank of Russia's
+    XML feed for a specified date. If no date is provided, it defaults to the current date.
+    It parses the XML response, extracts the currency rates, and saves them to the database.
+
+    Args:
+        user (str): The username who is downloading the rates (used for auditing).
+        date_req (str, optional): The date for which to download the rates, in 'dd/mm/YYYY' format.
+            Defaults to None, which means the current date will be used.
+
+    Returns:
+        list: A list of dictionaries, where each dictionary contains the currency code, value,
+            and nominal for the downloaded rates. Returns an empty list if no rates are downloaded
+            or if an error occurs.
+
+    Raises:
+        requests.RequestException: If there is an issue with the HTTP request.
+        ET.ParseError: If there is an issue parsing the XML response.
+    """
     date_req = date_req or date.today().strftime('%d/%m/%Y')
     url = ("http://www.cbr.ru/scripts/XML_daily.asp?date_req="
            f"{date_req}"
